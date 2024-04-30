@@ -2,6 +2,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from langchain_openai import ChatOpenAI
-
 llm = ChatOpenAI()
-llm.invoke("how langsmith?")
+
+llm.invoke("how can langsmith help with testing")
+
+from langchain_core.prompts import ChatPromptTemplate
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a world class technical documentation writer."),
+    ("user", "{input}")
+])
+
+chain = prompt | llm
+chain.invoke({"input": "how can langsmith help with testing?"})
+
+from langchain_core.output_parsers import StrOutputParser
+output_parser = StrOutputParser()
+
+chain = prompt | llm | output_parser
+chain.invoke({"input": "how can langsmith help with testing?"})
