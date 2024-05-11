@@ -28,12 +28,12 @@ docs = loader.load()
 from langchain_openai import OpenAIEmbeddings
 embeddings = OpenAIEmbeddings()
 
-from langchain_community.vectorstores import faiss
+from langchain_community.vectorstores.faiss import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 text_splitter = RecursiveCharacterTextSplitter()
 documents = text_splitter.split_documents(docs)
-vector = faiss.from_documents(documents, embeddings)
+vector = FAISS.from_documents(documents, embeddings)
 
 from langchain.chains.combine_documents import create_stuff_documents_chain
 prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
